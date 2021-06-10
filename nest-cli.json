@@ -1,0 +1,17 @@
+{
+  "language": "ts",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src/server",
+  "compilerOptions": {
+    "plugins": [
+      "@nestjs/swagger/plugin",
+      {
+        "name": "@nestjs/swagger/plugin",
+        "options": {
+          "classValidatorShim": true,
+          "dtoFileNameSuffix": "dto"
+        }
+      }
+    ]
+  }
+}
