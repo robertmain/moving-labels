@@ -36,6 +36,7 @@ module.exports = ({ mode = 'development' } = {}) => ([
     devServer: {
       contentBase: client.paths.dist.app,
       disableHostCheck: true,
+      https: true,
       overlay: {
         errors: true,
         warnings: false,

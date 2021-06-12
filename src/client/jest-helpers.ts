@@ -5,7 +5,6 @@ import {
   Wrapper,
   MountOptions,
 } from '@vue/test-utils';
-import { RouteConfig } from 'vue-router';
 
 const localVue = createLocalVue();
 

@@ -13,10 +13,10 @@ export abstract class BaseEntity {
   })
   public id: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   public createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ select: false })
   public updatedAt?: Date;
 
   @Exclude()

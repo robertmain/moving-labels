@@ -76,6 +76,9 @@ const config = ({ mode = 'none' }) => ({
             loader: 'ts-loader',
             options: {
               happyPackMode: true,
+              getCustomTransformers: (program) => ({
+                before: [require('@nestjs/swagger/plugin').before({}, program)],
+              }),
             },
           },
         ],

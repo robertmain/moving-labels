@@ -3,9 +3,7 @@ import { Connection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TerminusModule } from '@nestjs/terminus';
-import { BaseEntity } from './base/base.entity';
-import { HealthController } from './health.controller';
+import { BoxModule } from './box/box.module';
 
 const {
   DATABASE_URL,
@@ -22,18 +20,16 @@ const {
           sslMode: 'allow',
         },
       },
-      entities: [
-        BaseEntity,
-      ],
+      entities: [join(__dirname, '/**/*.entity.ts')],
       migrations: [join(__dirname, '/migration/**/*.ts')],
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'public'),
       renderPath: '/',
     }),
-    TerminusModule,
+    BoxModule,
   ],
-  controllers: [HealthController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {
