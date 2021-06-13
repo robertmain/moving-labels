@@ -7,15 +7,16 @@ import {
   Param,
   Res,
 } from '@nestjs/common';
-import { PDFPrinter } from 'server/printer/printers/pdf.printer';
+import { LabelPrinter } from 'server/printer/printers/label.printer';
 import { Response } from 'express';
 import { BoxService } from '../box/box.service';
 import { Label } from './label';
+import { EOL } from 'os';
 
 @Controller('label')
 export class LabelController {
-  @Inject(PDFPrinter)
-  public printer: PDFPrinter;
+  @Inject(LabelPrinter)
+  public printer: LabelPrinter;
 
   @Inject(BoxService)
   public boxService: BoxService;
@@ -39,8 +40,14 @@ export class LabelController {
       },
       margin: 10,
       text: box.name,
+      address: process.env.ADDRESS.split(EOL),
     });
     const labelData = await label.render();
+    await this.printer.print({
+      url: 'http://10.0.2.177:631/printers/dymo',
+      copies: 1,
+      data: labelData,
+    });
     res.write(labelData);
     res.end();
   }

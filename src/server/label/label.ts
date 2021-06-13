@@ -32,7 +32,8 @@ export class Label {
   }
 
   public async render(): Promise<Buffer> {
-    const qrCode = await QrCode.toDataURL(this.config.barcode.data);
+    const { barcode, height, margin } = this.config;
+    const qrCode = await QrCode.toDataURL(barcode.data);
     this.document
       .fontSize(14)
       .rotate(90, { origin: [20, 20] })
@@ -40,30 +41,23 @@ export class Label {
       .text(
         this.config.text,
         -(
-          (this.config.height - this.config.barcode.size)
-          - this.config.margin * 4),
-        this.config.margin
+          (height - barcode.size)
+          - margin * 4),
+        margin
       )
       .fontSize(9)
       .font('Courier')
       .image(
         qrCode,
-        -(this.config.height - this.config.margin * 4),
+        -(height - margin * 4),
         0,
         {
-          width: this.config.barcode.size,
-          height: this.config.barcode.size,
+          width: barcode.size,
+          height: barcode.size,
         }
       )
-      .text([
-        'R+T Main',
-        '53 America Boulevard',
-        'Ashland, MA',
-        '02717',
-      ].join(EOL),
-      -(
-        (this.config.height - this.config.barcode.size) - this.config.margin * 4
-      ), this.config.margin * 3);
+      .text(this.config.address.join(EOL),
+        -((height - barcode.size) - margin * 4), margin * 3);
     this.document.end();
     return new Promise((resolve, reject) => {
       const chunks = [];

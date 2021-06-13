@@ -12,8 +12,8 @@ services:
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
     command: >
-      -c ssl=on 
-      -c ssl_cert_file=/etc/ssl/certs/091aaf2d 
+      -c ssl=on
+      -c ssl_cert_file=/etc/ssl/certs/091aaf2d
       -c ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
   node:
     build:
@@ -21,6 +21,7 @@ services:
       target: base
     environment:
       APP_NAME: ${APP_NAME}
+      ADDRESS: ${ADDRESS}
       NODE_ENV: ${NODE_ENV}
       PORT: ${PORT}
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
