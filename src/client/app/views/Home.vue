@@ -92,13 +92,13 @@ export default class Home extends Vue {
   private boxes: BoxResponseDto[] = [];
 
   private currentBox?: CreateBoxDto | UpdateBoxDto = {
-    name: 'My Example Box',
-    description: 'Hello World',
+    name: '',
+    description: '',
     contents: [
     ],
   };
 
-  private modalVisible = true;
+  private modalVisible = false;
 
   public constructor() {
     super();
@@ -113,8 +113,14 @@ export default class Home extends Vue {
   }
 
   private async submitForm() {
-    const response = await this.axios.post('box', this.currentBox);
-    this.showModal(false);
+    try {
+      await this.axios.post('box', this.currentBox);
+      await this.refreshData();
+      this.showModal(false);
+    } catch (e) {
+      console.log(e);
+    }
+
     this.currentBox.name = '';
     this.currentBox.description = '';
     this.currentBox.contents = [];
