@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { BoxModule } from './box/box.module';
+import { LabelModule } from './label/label.module';
+import { PrinterModule } from './printer/printer.module';
 
 const {
   DATABASE_URL,
@@ -20,7 +22,7 @@ const {
           sslMode: 'allow',
         },
       },
-      entities: [join(__dirname, '/**/*.entity.ts')],
+      autoLoadEntities: true,
       migrations: [join(__dirname, '/migration/**/*.ts')],
     }),
     ServeStaticModule.forRoot({
@@ -28,6 +30,7 @@ const {
       renderPath: '/',
     }),
     BoxModule,
+    LabelModule,
   ],
   controllers: [],
   providers: [],

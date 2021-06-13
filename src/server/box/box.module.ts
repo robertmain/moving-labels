@@ -18,6 +18,8 @@ import { Item } from './item.entity';
   providers: [
     BoxService,
   ],
-  exports: [],
+  exports: [
+    BoxService,
+  ],
 })
 export class BoxModule {}
