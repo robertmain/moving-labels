@@ -1,10 +1,10 @@
 import {
+  Body,
   Controller,
-  Get,
   Header,
   Inject,
   NotFoundException,
-  Param,
+  Post,
   Res,
 } from '@nestjs/common';
 import { LabelPrinter } from 'server/printer/printers/label.printer';
@@ -21,10 +21,10 @@ export class LabelController {
   @Inject(BoxService)
   public boxService: BoxService;
 
-  @Get(':id')
+  @Post()
   @Header('Content-Type', 'application/pdf')
   public async print(
-    @Param('id') id: string,
+    @Body('id') id: string,
       @Res() res: Response
   ): Promise<void> {
     const [box] = await this.boxService.findById([id]);
