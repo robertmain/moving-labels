@@ -7,7 +7,6 @@ import {
   Param,
   Res,
 } from '@nestjs/common';
-import { Printer } from 'server/printer/printers/abstract.printer';
 import { PDFPrinter } from 'server/printer/printers/pdf.printer';
 import { Response } from 'express';
 import { BoxService } from '../box/box.service';
@@ -16,14 +15,14 @@ import { Label } from './label';
 @Controller('label')
 export class LabelController {
   @Inject(PDFPrinter)
-  public printer: Printer;
+  public printer: PDFPrinter;
 
   @Inject(BoxService)
   public boxService: BoxService;
 
   @Get(':id')
   @Header('Content-Type', 'application/pdf')
-  public async example(
+  public async print(
     @Param('id') id: string,
       @Res() res: Response
   ): Promise<void> {
@@ -41,7 +40,8 @@ export class LabelController {
       margin: 10,
       text: box.name,
     });
-    res.write(await label.render());
+    const labelData = await label.render();
+    res.write(labelData);
     res.end();
   }
 }
