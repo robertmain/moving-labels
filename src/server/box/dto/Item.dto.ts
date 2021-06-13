@@ -4,7 +4,7 @@ import { Allow, IsUUID } from 'class-validator';
 export abstract class ItemDto {
   @IsUUID()
   @ApiProperty()
-  public id: string;
+  public id?: string;
 
   @Allow()
   @ApiProperty()

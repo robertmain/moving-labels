@@ -1,9 +1,58 @@
 <template>
   <div class="home">
-    <page-section backgroundColor="white">
+    <dlg
+      :close-on-click-modal="true"
+      :close-on-press-escape="true"
+      :visible.sync="modalVisible"
+      ref="modal"
+      width="95%"
+    >
+      <div slot="title">
+        <h3>Add Box</h3>
+      </div>
+      <el-form ref="form">
+        <el-form-item>
+          <el-input
+            placeholder="Title"
+            v-model="currentBox.name"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            type="textarea"
+            :rows="6"
+            placeholder="Description"
+            v-model="currentBox.description"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            size="medium"
+            icon="el-icon-plus"
+            @click="() => submitForm()"
+          >
+            Add Box
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </dlg>
+    <page-section
+      background-color="white"
+      id="header"
+    >
       <h2>Boxes</h2>
+      <el-button
+        icon="el-icon-plus"
+        @click="() => showModal(true)"
+      />
+    </page-section>
+    <page-section background-color="#eee">
       <list>
-        <list-item v-for="box in boxes" :key="box.id">
+        <list-item
+          v-for="box in boxes"
+          :key="box.id"
+        >
           <h4>{{ box.name }}</h4>
           <p>{{ box.description }}</p>
         </list-item>
@@ -19,18 +68,37 @@ import List from '@/components/List.vue';
 import ListItem from '@/components/ListItem.vue';
 import axios, { AxiosInstance } from 'axios';
 import { BoxResponseDto } from 'server/box/dto/BoxResponse.dto';
+import {
+  Button, Dialog, Form, FormItem, Input,
+} from 'element-ui';
+import { CreateBoxDto } from 'server/box/dto/CreateBox.dto';
+import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
 
 @Component({
   components: {
     PageSection,
     List,
     ListItem,
+    elButton: Button,
+    dlg: Dialog,
+    elInput: Input,
+    elForm: Form,
+    elFormItem: FormItem,
   },
 })
 export default class Home extends Vue {
   private axios: AxiosInstance;
 
   private boxes: BoxResponseDto[] = [];
+
+  private currentBox?: CreateBoxDto | UpdateBoxDto = {
+    name: 'My Example Box',
+    description: 'Hello World',
+    contents: [
+    ],
+  };
+
+  private modalVisible = true;
 
   public constructor() {
     super();
@@ -40,14 +108,38 @@ export default class Home extends Vue {
     });
   }
 
-  public async mounted () {
+  private async refreshData(): Promise<void> {
     this.boxes = (await this.axios.get('box')).data;
-    console.log(this.boxes);
+  }
+
+  private async submitForm() {
+    const response = await this.axios.post('box', this.currentBox);
+    this.showModal(false);
+    this.currentBox.name = '';
+    this.currentBox.description = '';
+    this.currentBox.contents = [];
+  }
+
+  public async mounted(): Promise<void> {
+    await this.refreshData();
+  }
+
+  private showModal(status: boolean) {
+    this.modalVisible = status;
   }
 }
 </script>
 
 <style lang="scss">
+  #header {
+    display: grid;
+    grid-template-columns: auto 0.25fr;
+    grid-template-rows: 1fr;
+    button i{
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
   .home{
     h2{ color: var(--text-dark)!important }
   }
