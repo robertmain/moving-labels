@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { BoxModule } from 'server/box/box.module';
 import { PrinterModule } from 'server/printer/printer.module';
 import { LabelController } from './label.controller';
-import { LabelService } from './label.service';
 
 @Module({
   imports: [
@@ -12,11 +11,7 @@ import { LabelService } from './label.service';
   controllers: [
     LabelController,
   ],
-  providers: [
-    LabelService,
-  ],
-  exports: [
-    LabelService,
-  ],
+  providers: [],
+  exports: [],
 })
 export class LabelModule { }
