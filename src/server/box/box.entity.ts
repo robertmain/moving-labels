@@ -21,7 +21,7 @@ export class Box extends BaseEntity {
   @OneToMany(
     (): ObjectType<Item> => Item,
     ({ box }): Box => box,
-    { cascade: ['insert', 'soft-remove', 'recover'] }
+    { cascade: ['insert', 'soft-remove', 'recover', 'update'] }
   )
   public contents: Item[];
 }
