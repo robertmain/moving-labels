@@ -40,7 +40,7 @@ export class LabelController {
       },
       margin: 10,
       text: box.name,
-      address: process.env.ADDRESS.split(EOL),
+      address: process.env.ADDRESS.split('|'),
     });
     const labelData = await label.render();
     await this.printer.print({
