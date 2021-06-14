@@ -3,8 +3,22 @@
     <dlg
       :close-on-click-modal="true"
       :close-on-press-escape="true"
-      :visible.sync="modalVisible"
-      ref="modal"
+      :visible.sync="showOptionsModal"
+      width="50%"
+    >
+      <div slot="title">
+        <h3>{{currentBox.name}}</h3>
+      </div>
+      <el-button @click="() => printLabel(currentBox.id)">
+        <i class="el-icon-printer"></i><br />
+        <br />
+        Print Label
+      </el-button>
+    </dlg>
+    <dlg
+      :close-on-click-modal="true"
+      :close-on-press-escape="true"
+      :visible.sync="showAddModal"
       width="95%"
     >
       <div slot="title">
@@ -50,6 +64,7 @@
     <page-section background-color="#eee">
       <list>
         <list-item
+          @click="() => setOptionsModalVisible(box)"
           v-for="box in boxes"
           :key="box.id"
         >
@@ -98,7 +113,9 @@ export default class Home extends Vue {
     ],
   };
 
-  private modalVisible = false;
+  private showOptionsModal = false;
+
+  private showAddModal = false;
 
   public constructor() {
     super();
@@ -106,6 +123,10 @@ export default class Home extends Vue {
       baseURL: '/api/',
       validateStatus: (status) => status < 400,
     });
+  }
+
+  private async printLabel(id: string): Promise<void> {
+    await this.axios.post('label', { id });
   }
 
   private async refreshData(): Promise<void> {
@@ -130,8 +151,13 @@ export default class Home extends Vue {
     await this.refreshData();
   }
 
+  private setOptionsModalVisible(box) {
+    this.currentBox = box;
+    this.showOptionsModal = true;
+  }
+
   private showModal(status: boolean) {
-    this.modalVisible = status;
+    this.showAddModal = status;
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <li><slot /></li>
+  <li @click="$emit('click')"><slot /></li>
 </template>
 
 <style lang="scss" scoped>
