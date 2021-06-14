@@ -44,7 +44,7 @@ export class LabelController {
     });
     const labelData = await label.render();
     await this.printer.print({
-      url: 'http://10.0.2.177:631/printers/dymo',
+      url: process.env.PRINTER_URL,
       copies: 1,
       data: labelData,
     });
