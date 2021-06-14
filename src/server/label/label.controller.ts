@@ -7,16 +7,15 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
-import { LabelPrinter } from 'server/printer/printers/label.printer';
+import { IppPrinter } from 'server/printer/printers/ipp.printer';
 import { Response } from 'express';
 import { BoxService } from '../box/box.service';
 import { Label } from './label';
-import { EOL } from 'os';
 
 @Controller('label')
 export class LabelController {
-  @Inject(LabelPrinter)
-  public printer: LabelPrinter;
+  @Inject(IppPrinter)
+  public printer: IppPrinter;
 
   @Inject(BoxService)
   public boxService: BoxService;

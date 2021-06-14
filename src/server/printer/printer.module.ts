@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { LabelPrinter } from './printers/label.printer';
+import { IppPrinter } from './printers/ipp.printer';
 import { PDFPrinter } from './printers/pdf.printer';
 
 @Module({
@@ -8,11 +8,11 @@ import { PDFPrinter } from './printers/pdf.printer';
   ],
   providers: [
     PDFPrinter,
-    LabelPrinter,
+    IppPrinter,
   ],
   exports: [
     PDFPrinter,
-    LabelPrinter,
+    IppPrinter,
   ],
 })
 export class PrinterModule {}

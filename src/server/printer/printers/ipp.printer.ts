@@ -1,7 +1,7 @@
 import { Printer, FullRequest } from 'ipp';
 import { Printer as Printable, PrintJob } from './abstract.printer';
 
-export class LabelPrinter implements Printable {
+export class IppPrinter implements Printable {
   public async print(job: PrintJob): Promise<boolean> {
     let success = false;
     try {
