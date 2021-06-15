@@ -4,8 +4,10 @@ import { Printer, PrintJob } from './abstract.printer';
 
 const writeFile = promisify(wf);
 
+export type PDFPrintJob = PrintJob & { url: string }
+
 export class PDFPrinter implements Printer {
-  public async print(job: PrintJob): Promise<boolean> {
+  public async print(job: PDFPrintJob): Promise<boolean> {
     let success = false;
     try {
       const copies = Array(job.copies).fill('')

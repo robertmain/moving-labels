@@ -5,7 +5,6 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { BoxModule } from './box/box.module';
 import { LabelModule } from './label/label.module';
-import { PrinterModule } from './printer/printer.module';
 
 const {
   DATABASE_URL,

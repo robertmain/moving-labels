@@ -11,10 +11,11 @@ import { IppPrinter } from 'server/printer/printers/ipp.printer';
 import { Response } from 'express';
 import { BoxService } from '../box/box.service';
 import { Label } from './label';
+import { PRINTER_TYPE } from 'server/printer/printer.module';
 
 @Controller('label')
 export class LabelController {
-  @Inject(IppPrinter)
+  @Inject(PRINTER_TYPE.LABEL)
   public printer: IppPrinter;
 
   @Inject(BoxService)
@@ -43,9 +44,8 @@ export class LabelController {
     });
     const labelData = await label.render();
     await this.printer.print({
-      url: process.env.PRINTER_URL,
-      copies: 1,
       data: labelData,
+      name: `${box.name} label`,
     });
     res.write(labelData);
     res.end();

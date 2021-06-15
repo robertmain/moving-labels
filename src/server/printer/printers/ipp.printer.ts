@@ -2,18 +2,23 @@ import { Printer, FullRequest } from 'ipp';
 import { Printer as Printable, PrintJob } from './abstract.printer';
 
 export class IppPrinter implements Printable {
-  public async print(job: PrintJob): Promise<boolean> {
+  private printer: Printer;
+
+  public constructor(url: string) {
+    this.printer = new Printer(url);
+  }
+
+  public async print({ data, name = 'Label Print' }: PrintJob): Promise<boolean> {
     let success = false;
     try {
-      const printer = new Printer(job.url);
       const config: FullRequest = {
         'operation-attributes-tag': {
-          'job-name': 'Label Print',
+          'job-name': name,
           'document-format': 'application/pdf',
         },
-        data: job.data,
+        data,
       };
-      printer.execute('Print-Job', config, (err, response) => {
+      this.printer.execute('Print-Job', config, (err, response) => {
         if (err) {
           console.log(err);
         }

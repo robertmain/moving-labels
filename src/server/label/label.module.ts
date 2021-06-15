@@ -6,7 +6,9 @@ import { LabelController } from './label.controller';
 @Module({
   imports: [
     BoxModule,
-    PrinterModule,
+    PrinterModule.register({
+      labelPrinterUrl: process.env.PRINTER_URL,
+    }),
   ],
   controllers: [
     LabelController,
