@@ -25,7 +25,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/indent': ['error', 2],
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error", , { "ignoreTypeValueShadow": true }],
+    "@typescript-eslint/no-shadow": ["error"],
     indent: ['error', 2],
     'arrow-parens': ['warn', 'always'],
     'comma-dangle': [

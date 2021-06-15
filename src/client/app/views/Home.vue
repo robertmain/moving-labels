@@ -7,11 +7,11 @@
       width="50%"
     >
       <div slot="title">
-        <h3>{{currentBox.name}}</h3>
+        <h3>{{ currentBox.name }}</h3>
       </div>
       <el-button @click="() => printLabel(currentBox.id)">
-        <i class="el-icon-printer"></i><br />
-        <br />
+        <i class="el-icon-printer" /><br>
+        <br>
         Print Label
       </el-button>
     </dlg>

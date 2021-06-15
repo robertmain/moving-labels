@@ -1,8 +1,7 @@
-import { InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'server/base/base.service';
 import {
-  EntityNotFoundError, QueryFailedError, Repository, UpdateResult,
+  EntityNotFoundError, QueryFailedError, Repository,
 } from 'typeorm';
 import { Box } from './box.entity';
 

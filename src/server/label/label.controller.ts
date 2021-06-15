@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { IppPrinter } from 'server/printer/printers/ipp.printer';
 import { Response } from 'express';
+import { PRINTER_TYPE } from 'server/printer/printer.module';
 import { BoxService } from '../box/box.service';
 import { Label } from './label';
-import { PRINTER_TYPE } from 'server/printer/printer.module';
 
 @Controller('label')
 export class LabelController {
