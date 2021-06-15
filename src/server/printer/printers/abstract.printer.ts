@@ -1,6 +1,6 @@
 export type PrintJob = {
   name?: string,
-  copies: number,
+  copies?: number,
   data: Buffer,
 };
 
