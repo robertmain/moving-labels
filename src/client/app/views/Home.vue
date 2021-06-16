@@ -136,7 +136,7 @@ export default class Home extends Vue {
 
   private async submitForm() {
     try {
-      await this.axios.post('box', this.currentBox);
+      this.$store.dispatch(ACTIONS.ADD_BOX, this.currentBox);
       this.$store.dispatch(ACTIONS.GET_BOXES);
       this.showModal(false);
     } catch (e) {

@@ -3,15 +3,19 @@ import { BoxStateShape } from './state';
 import { Box } from './types';
 
 export enum MUTATIONS {
-  GET_BOXES_SUCCESS = 'GET_BOXES_SUCCESS',
-  GET_BOXES_FAILURE = 'GET_BOXES_FAILURE',
+  ADD_BOXES = 'ADD_BOXES',
+  SET_CURRENT_BOX_ID = 'SET_CURRENT_BOX_ID',
+  AJAX_FAILIURE = 'AJAX_FAILIURE',
 }
 
 export const mutations: Record<string, Mutation<BoxStateShape>> = {
-  [MUTATIONS.GET_BOXES_SUCCESS](state, boxes: Box[]): void {
+  [MUTATIONS.ADD_BOXES](state, boxes: Box[]): void {
     state.boxes.push(...boxes);
   },
-  [MUTATIONS.GET_BOXES_FAILURE](_, error): void {
+  [MUTATIONS.SET_CURRENT_BOX_ID](state, id: string) {
+    state.currentBoxId = id;
+  },
+  [MUTATIONS.AJAX_FAILIURE](_, error) {
     console.error(error);
   },
 };
