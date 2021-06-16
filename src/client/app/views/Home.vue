@@ -82,14 +82,21 @@ import PageSection from '@/components/PageSection.vue';
 import List from '@/components/List.vue';
 import ListItem from '@/components/ListItem.vue';
 import axios, { AxiosInstance } from 'axios';
-import { BoxResponseDto } from 'server/box/dto/BoxResponse.dto';
 import {
   Button, Dialog, Form, FormItem, Input,
 } from 'element-ui';
 import { CreateBoxDto } from 'server/box/dto/CreateBox.dto';
 import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
+import { mapGetters } from 'vuex';
+import { ACTIONS } from '../store/box/actions';
+import { BoxModule } from '../store/box';
 
 @Component({
+  computed: {
+    ...mapGetters([
+      'boxes',
+    ]),
+  },
   components: {
     PageSection,
     List,
@@ -103,8 +110,6 @@ import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
 })
 export default class Home extends Vue {
   private axios: AxiosInstance;
-
-  private boxes: BoxResponseDto[] = [];
 
   private currentBox?: CreateBoxDto | UpdateBoxDto = {
     name: '',
@@ -129,14 +134,10 @@ export default class Home extends Vue {
     await this.axios.post('label', { id });
   }
 
-  private async refreshData(): Promise<void> {
-    this.boxes = (await this.axios.get('box')).data;
-  }
-
   private async submitForm() {
     try {
       await this.axios.post('box', this.currentBox);
-      await this.refreshData();
+      this.$store.dispatch(ACTIONS.GET_BOXES);
       this.showModal(false);
     } catch (e) {
       console.log(e);
@@ -148,7 +149,7 @@ export default class Home extends Vue {
   }
 
   public async mounted(): Promise<void> {
-    await this.refreshData();
+    await this.$store.dispatch(ACTIONS.GET_BOXES);
   }
 
   private setOptionsModalVisible(box) {
