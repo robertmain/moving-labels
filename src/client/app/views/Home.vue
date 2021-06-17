@@ -89,7 +89,7 @@ import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
 import { mapGetters } from 'vuex';
 import { ACTIONS as BOX } from '../store/box/actions';
 import { ACTIONS as LABEL } from '../store/label/actions';
-import store from '../store';
+import { store } from '../store';
 
 @Component({
   computed: {
