@@ -81,15 +81,15 @@ import { Component, Vue } from 'vue-property-decorator';
 import PageSection from '@/components/PageSection.vue';
 import List from '@/components/List.vue';
 import ListItem from '@/components/ListItem.vue';
-import axios, { AxiosInstance } from 'axios';
 import {
   Button, Dialog, Form, FormItem, Input,
 } from 'element-ui';
 import { CreateBoxDto } from 'server/box/dto/CreateBox.dto';
 import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
 import { mapGetters } from 'vuex';
-import { ACTIONS } from '../store/box/actions';
-import { BoxModule } from '../store/box';
+import { ACTIONS as BOX } from '../store/box/actions';
+import { ACTIONS as LABEL } from '../store/label/actions';
+import store from '../store';
 
 @Component({
   computed: {
@@ -109,8 +109,6 @@ import { BoxModule } from '../store/box';
   },
 })
 export default class Home extends Vue {
-  private axios: AxiosInstance;
-
   private currentBox?: CreateBoxDto | UpdateBoxDto = {
     name: '',
     description: '',
@@ -122,22 +120,14 @@ export default class Home extends Vue {
 
   private showAddModal = false;
 
-  public constructor() {
-    super();
-    this.axios = axios.create({
-      baseURL: '/api/',
-      validateStatus: (status) => status < 400,
-    });
-  }
-
   private async printLabel(id: string): Promise<void> {
-    await this.axios.post('label', { id });
+    store.dispatch(LABEL.PRINT_LABEL, id);
   }
 
   private async submitForm() {
     try {
-      this.$store.dispatch(ACTIONS.ADD_BOX, this.currentBox);
-      this.$store.dispatch(ACTIONS.GET_BOXES);
+      store.dispatch(BOX.ADD_BOX, this.currentBox);
+      store.dispatch(BOX.GET_BOXES);
       this.showModal(false);
     } catch (e) {
       console.log(e);
@@ -149,7 +139,7 @@ export default class Home extends Vue {
   }
 
   public async mounted(): Promise<void> {
-    await this.$store.dispatch(ACTIONS.GET_BOXES);
+    await store.dispatch(BOX.GET_BOXES);
   }
 
   private setOptionsModalVisible(box) {
