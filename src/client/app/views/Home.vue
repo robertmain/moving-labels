@@ -77,6 +77,8 @@ export default class Home extends Vue {
   private submitForm(event: Event, box: Box): void {
     if (!box.id) {
       store.dispatch(BOX.ADD_BOX, box);
+    } else {
+      store.dispatch(BOX.UPDATE_BOX, box);
     }
   }
 

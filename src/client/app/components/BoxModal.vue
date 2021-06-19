@@ -129,6 +129,7 @@ export default class BoxModal extends Vue {
   };
 
   private populate() {
+    this.formData.id = this.id;
     this.formData.name = this.name;
     this.formData.description = this.description;
   }
