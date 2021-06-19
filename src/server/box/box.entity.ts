@@ -4,7 +4,11 @@ import {
 } from 'typeorm';
 import { Item } from './item.entity';
 
-@Entity()
+@Entity({
+  orderBy: {
+    createdAt: 'ASC',
+  },
+})
 export class Box extends BaseEntity {
   @Column({
     type: 'varchar',
