@@ -4,6 +4,13 @@ import {
 } from 'typeorm';
 import { Item } from './item.entity';
 
+export enum SIZE {
+  XLARGE = 'XLARGE',
+  LARGE = 'LARGE',
+  MEDIUM = 'MEDIUM',
+  SMALL = 'SMALL',
+}
+
 @Entity({
   orderBy: {
     createdAt: 'ASC',
@@ -21,6 +28,14 @@ export class Box extends BaseEntity {
     nullable: true,
   })
   public description?: string;
+
+  @Column({
+    type: 'enum',
+    enum: SIZE,
+    nullable: true,
+    default: SIZE.MEDIUM,
+  })
+  public size?: SIZE = SIZE.MEDIUM;
 
   @OneToMany(
     (): ObjectType<Item> => Item,
