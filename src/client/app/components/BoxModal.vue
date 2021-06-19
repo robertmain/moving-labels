@@ -41,6 +41,16 @@
         </el-button>
       </el-form-item>
     </el-form>
+    <div
+      slot="footer"
+      v-if="id"
+    >
+      <el-button @click="(e) => printHandler(e, id)">
+        <i class="el-icon-printer" /><br>
+        <br>
+        Print Label
+      </el-button>
+    </div>
   </el-dialog>
 </template>
 <script lang="ts">
@@ -104,6 +114,13 @@ export default class BoxModal extends Vue {
   })
   // eslint-disable-next-line @typescript-eslint/ban-types
   public submitHandler: Function;
+
+  @Prop({
+    type: Function,
+    required: true,
+  })
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  public printHandler: Function;
 
   private formData = {
     id: null,

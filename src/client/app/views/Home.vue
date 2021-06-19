@@ -3,6 +3,7 @@
     <box-modal
       :visible.sync="showAddModal"
       :submit-handler="submitForm"
+      :print-handler="printLabel"
       v-bind="currentBox"
     />
     <page-section
