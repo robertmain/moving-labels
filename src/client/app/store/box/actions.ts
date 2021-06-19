@@ -8,6 +8,7 @@ import { Box } from './types';
 export enum ACTIONS {
   GET_BOXES = 'GET_BOXES',
   ADD_BOX = 'ADD_BOX',
+  SET_CURRENT_BOX = 'SET_CURRENT_BOX',
 }
 
 export const actions: Record<string, Action<BoxStateShape, State>> = {
@@ -19,12 +20,17 @@ export const actions: Record<string, Action<BoxStateShape, State>> = {
       commit(MUTATIONS.AJAX_FAILIURE, error);
     }
   },
-  async [ACTIONS.ADD_BOX]({ commit }, box: Box): Promise <void> {
+  async [ACTIONS.ADD_BOX]({ commit }, { id, ...box }: Box): Promise <void> {
     try {
-      const { data } = await addBox(box);
-      commit(MUTATIONS.ADD_BOXES, data);
+      if (!id) {
+        const { data } = await addBox(box);
+        commit(MUTATIONS.ADD_BOXES, data);
+      }
     } catch (error) {
       commit(MUTATIONS.AJAX_FAILIURE, error);
     }
+  },
+  async [ACTIONS.SET_CURRENT_BOX]({ commit }, id: string): Promise <void> {
+    commit(MUTATIONS.SET_CURRENT_BOX_ID, id);
   },
 };

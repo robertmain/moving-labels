@@ -1,56 +1,10 @@
 <template>
   <div class="home">
-    <dlg
-      :close-on-click-modal="true"
-      :close-on-press-escape="true"
-      :visible.sync="showOptionsModal"
-      width="50%"
-    >
-      <div slot="title">
-        <h3>{{ currentBox.name }}</h3>
-      </div>
-      <el-button @click="() => printLabel(currentBox.id)">
-        <i class="el-icon-printer" /><br>
-        <br>
-        Print Label
-      </el-button>
-    </dlg>
-    <dlg
-      :close-on-click-modal="true"
-      :close-on-press-escape="true"
+    <box-modal
       :visible.sync="showAddModal"
-      width="95%"
-    >
-      <div slot="title">
-        <h3>Add Box</h3>
-      </div>
-      <el-form ref="form">
-        <el-form-item>
-          <el-input
-            placeholder="Title"
-            v-model="currentBox.name"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-input
-            type="textarea"
-            :rows="6"
-            placeholder="Description"
-            v-model="currentBox.description"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            size="medium"
-            icon="el-icon-plus"
-            @click="() => submitForm()"
-          >
-            Add Box
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </dlg>
+      :submit-handler="submitForm"
+      v-bind="currentBox"
+    />
     <page-section
       background-color="white"
       id="header"
@@ -58,13 +12,13 @@
       <h2>Boxes</h2>
       <el-button
         icon="el-icon-plus"
-        @click="() => showModal(true)"
+        @click="() => viewBox(null)"
       />
     </page-section>
     <page-section background-color="#eee">
       <list>
         <list-item
-          @click="() => setOptionsModalVisible(box)"
+          @click="() => viewBox(box.id)"
           v-for="box in boxes"
           :key="box.id"
         >
@@ -84,17 +38,18 @@ import ListItem from '@/components/ListItem.vue';
 import {
   Button, Dialog, Form, FormItem, Input,
 } from 'element-ui';
-import { CreateBoxDto } from 'server/box/dto/CreateBox.dto';
-import { UpdateBoxDto } from 'server/box/dto/UpdateBox.dto';
 import { mapGetters } from 'vuex';
+import BoxModal from '@/components/BoxModal.vue';
 import { ACTIONS as BOX } from '../store/box/actions';
 import { ACTIONS as LABEL } from '../store/label/actions';
 import { store } from '../store';
+import { Box } from '../store/box/types';
 
 @Component({
   computed: {
     ...mapGetters([
       'boxes',
+      'currentBox',
     ]),
   },
   components: {
@@ -106,16 +61,10 @@ import { store } from '../store';
     elInput: Input,
     elForm: Form,
     elFormItem: FormItem,
+    BoxModal,
   },
 })
 export default class Home extends Vue {
-  private currentBox?: CreateBoxDto | UpdateBoxDto = {
-    name: '',
-    description: '',
-    contents: [
-    ],
-  };
-
   private showOptionsModal = false;
 
   private showAddModal = false;
@@ -124,31 +73,19 @@ export default class Home extends Vue {
     store.dispatch(LABEL.PRINT_LABEL, id);
   }
 
-  private async submitForm() {
-    try {
-      store.dispatch(BOX.ADD_BOX, this.currentBox);
-      store.dispatch(BOX.GET_BOXES);
-      this.showModal(false);
-    } catch (e) {
-      console.log(e);
+  private async submitForm(event: Event, box: Box) {
+    if (!box.id) {
+      store.dispatch(BOX.ADD_BOX, box);
     }
-
-    this.currentBox.name = '';
-    this.currentBox.description = '';
-    this.currentBox.contents = [];
   }
 
   public async mounted(): Promise<void> {
     await store.dispatch(BOX.GET_BOXES);
   }
 
-  private setOptionsModalVisible(box) {
-    this.currentBox = box;
-    this.showOptionsModal = true;
-  }
-
-  private showModal(status: boolean) {
-    this.showAddModal = status;
+  private viewBox(id?: string) {
+    store.dispatch(BOX.SET_CURRENT_BOX, id);
+    this.showAddModal = true;
   }
 }
 </script>
@@ -157,7 +94,12 @@ export default class Home extends Vue {
   #header {
     display: grid;
     grid-template-columns: auto 0.25fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    h2{
+      line-height: 1;
+      margin-bottom: 0px;
+    };
     button i{
       font-weight: bold;
       font-size: 20px;
