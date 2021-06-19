@@ -1,5 +1,5 @@
 import { Action } from 'vuex';
-import { addBox, getBoxes } from '@/api/Box';
+import { addBox, getBoxes, updateBox } from '@/api/Box';
 import { BoxStateShape } from './state';
 import { MUTATIONS } from './mutations';
 import { State } from '../state';
@@ -8,6 +8,7 @@ import { Box } from './types';
 export enum ACTIONS {
   GET_BOXES = 'GET_BOXES',
   ADD_BOX = 'ADD_BOX',
+  UPDATE_BOX = 'UPDATE_BOX',
   SET_CURRENT_BOX = 'SET_CURRENT_BOX',
 }
 
@@ -26,6 +27,17 @@ export const actions: Record<string, Action<BoxStateShape, State>> = {
         const { data } = await addBox(box);
         commit(MUTATIONS.ADD_BOXES, data);
       }
+    } catch (error) {
+      commit(MUTATIONS.AJAX_FAILIURE, error);
+    }
+  },
+  async [ACTIONS.UPDATE_BOX]({ commit }, { id, ...box }: Box): Promise <void> {
+    try {
+      const { data } = await updateBox(id, box);
+      commit(MUTATIONS.UPDATE_BOX, {
+        id,
+        ...data,
+      });
     } catch (error) {
       commit(MUTATIONS.AJAX_FAILIURE, error);
     }
