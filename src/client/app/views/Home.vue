@@ -70,11 +70,11 @@ export default class Home extends Vue {
 
   private showAddModal = false;
 
-  private async printLabel(id: string): Promise<void> {
+  private printLabel(e: Event, id: string): void {
     store.dispatch(LABEL.PRINT_LABEL, id);
   }
 
-  private async submitForm(event: Event, box: Box) {
+  private submitForm(event: Event, box: Box): void {
     if (!box.id) {
       store.dispatch(BOX.ADD_BOX, box);
     }
