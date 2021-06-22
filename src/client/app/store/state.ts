@@ -1,4 +1,7 @@
-export type State = Record<string, unknown>;
+export type State = {
+  APP_NAME: string,
+}
 
 export const state = {
+  APP_NAME: '',
 };

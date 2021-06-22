@@ -25,7 +25,11 @@ import PageSection from '@/components/PageSection.vue';
     PageSection,
   },
 })
-export default class Home extends Vue { }
+export default class Home extends Vue {
+  public mounted(): void {
+    document.title += ' | Uh-Oh';
+  }
+}
 </script>
 
 <style lang="scss" scoped>
