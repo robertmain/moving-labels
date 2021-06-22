@@ -100,7 +100,7 @@ import { SIZE } from '../store/box/types';
   filters: {
     titleCase: (value: string) => value[0].toUpperCase()
       + value.slice(1).toLowerCase(),
-  }
+  },
 })
 export default class BoxModal extends Vue {
   @PropSync('visible', {
