@@ -25,7 +25,7 @@ export default class App extends Vue {
 *{ box-sizing: border-box; }
 
 body {
-  background-color: var(--dark-grey);
+  background-color: var(--white);
   p, li, h1, h2, h3, h4, h5, h6{
     color: var(--text-dark);
   }
