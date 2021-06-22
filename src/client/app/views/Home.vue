@@ -16,17 +16,27 @@
         @click="() => viewBox(null)"
       />
     </page-section>
-    <page-section background-color="#eee">
-      <list>
-        <list-item
-          @click="() => viewBox(box.id)"
-          v-for="box in boxes"
-          :key="box.id"
-        >
-          <h4>{{ box.name }}</h4>
-          <p>{{ box.description }}</p>
-        </list-item>
-      </list>
+    <page-section
+      background-color="#eee"
+      id="card-list"
+    >
+      <el-card
+        v-for="box in boxes"
+        :key="box.id"
+        class="card"
+      >
+        <template slot="header">
+          <h5>{{ box.name }}</h5>
+          <el-button
+            type="default"
+            icon="el-icon-setting"
+            @click="viewBox(box.id)"
+          />
+        </template>
+        <p>
+          {{ box.description }}
+        </p>
+      </el-card>
     </page-section>
   </div>
 </template>
@@ -34,10 +44,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import PageSection from '@/components/PageSection.vue';
-import List from '@/components/List.vue';
-import ListItem from '@/components/ListItem.vue';
 import {
-  Button, Dialog, Form, FormItem, Input,
+  Button,
+  Dialog,
+  Form,
+  FormItem,
+  Input,
+  Card,
 } from 'element-ui';
 import { mapGetters } from 'vuex';
 import BoxModal from '@/components/BoxModal.vue';
@@ -55,13 +68,12 @@ import { Box } from '../store/box/types';
   },
   components: {
     PageSection,
-    List,
-    ListItem,
     elButton: Button,
     dlg: Dialog,
     elInput: Input,
     elForm: Form,
     elFormItem: FormItem,
+    elCard: Card,
     BoxModal,
   },
 })
@@ -94,6 +106,7 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
+  @import '@/assets/scss/breakpoints.scss';
   #header {
     display: grid;
     grid-template-columns: auto 0.25fr;
@@ -110,5 +123,31 @@ export default class Home extends Vue {
   }
   .home{
     h2{ color: var(--text-dark)!important }
+  }
+
+  #card-list{
+    display: grid;
+    grid-gap: var(--spacing-xs);
+    grid-template-columns: 1fr;
+    @include for-tablet-portrait-up {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: var(--spacing-md);
+    }
+    @include for-tablet-landscape-up  {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: var(--spacing-md);
+    }
+  }
+
+  .card{
+    margin-bottom: var(--spacing-md);
+    .el-card__header {
+      display: grid;
+      grid-template-columns: auto 70px;
+      align-items: center;
+    }
+    &:last-of-type{
+      margin-bottom: 0px;
+    }
   }
 </style>
