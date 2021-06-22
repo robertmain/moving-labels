@@ -21,7 +21,6 @@ export const mutations: Record<string, Mutation<BoxStateShape>> = {
   },
   [MUTATIONS.UPDATE_BOX](state, { id, ...box }: Box) {
     const boxToUpdate = state.boxes.find(({ id: boxId }) => boxId === id);
-    console.log(boxToUpdate);
     const boxIndex = state.boxes.indexOf(boxToUpdate);
     state.boxes[boxIndex] = { id, ...box };
   },
