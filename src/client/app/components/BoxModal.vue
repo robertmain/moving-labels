@@ -31,6 +31,22 @@
         />
       </el-form-item>
       <el-form-item>
+        <el-select
+          size="large"
+          :style="{ width: '100%' }"
+          v-model="formData.size"
+        >
+          <el-option
+            v-for="size in sizes"
+            :key="size"
+            :label="size | titleCase"
+            :value="size"
+          >
+            {{ size | titleCase }}
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
         <el-button
           type="success"
           size="medium"
@@ -66,12 +82,10 @@ import {
   Form,
   FormItem,
   Input,
+  Select,
+  Option,
 } from 'element-ui';
-
-enum MODE {
-  ADD = 'ADD',
-  EDIT = 'EDIT',
-}
+import { SIZE } from '../store/box/types';
 
 @Component({
   components: {
@@ -80,7 +94,13 @@ enum MODE {
     ElForm: Form,
     ElInput: Input,
     ElButton: Button,
+    ElSelect: Select,
+    ElOption: Option,
   },
+  filters: {
+    titleCase: (value: string) => value[0].toUpperCase()
+      + value.slice(1).toLowerCase(),
+  }
 })
 export default class BoxModal extends Vue {
   @PropSync('visible', {
@@ -109,6 +129,13 @@ export default class BoxModal extends Vue {
   public description: string;
 
   @Prop({
+    type: String,
+    default: SIZE.SMALL,
+    validator: (val) => Object.values(SIZE).includes(val),
+  })
+  public size: SIZE;
+
+  @Prop({
     type: Function,
     required: true,
   })
@@ -126,16 +153,18 @@ export default class BoxModal extends Vue {
     id: null,
     name: '',
     description: '',
+    size: '',
   };
 
   private populate() {
     this.formData.id = this.id;
     this.formData.name = this.name;
     this.formData.description = this.description;
+    this.formData.size = this.size;
   }
 
-  private get mode() {
-    return this.id === null ? MODE.ADD : MODE.EDIT;
+  private get sizes(): string[] {
+    return Object.values(SIZE);
   }
 }
 </script>

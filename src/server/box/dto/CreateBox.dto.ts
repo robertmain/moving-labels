@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Allow } from 'class-validator';
+import { Allow, IsEnum } from 'class-validator';
+import { SIZE } from '../box.entity';
 import { ItemDto } from './Item.dto';
 
 export abstract class CreateBoxDto {
@@ -8,8 +9,20 @@ export abstract class CreateBoxDto {
   public name: string;
 
   @Allow()
-  @ApiProperty()
+  @ApiProperty({
+    type: 'string',
+    required: false,
+    default: null,
+  })
   public description?: string;
+
+  @IsEnum(SIZE)
+  @ApiProperty({
+    type: 'string',
+    enum: SIZE,
+    required: true,
+  })
+  public size?: SIZE;
 
   @Allow()
   @ApiProperty({

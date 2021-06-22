@@ -1,3 +1,10 @@
+export enum SIZE {
+  XLARGE = 'XLARGE',
+  LARGE = 'LARGE',
+  MEDIUM = 'MEDIUM',
+  SMALL = 'SMALL',
+}
+
 type Describable = {
   id?: string;
   name: string;
@@ -10,4 +17,5 @@ export type Item = Describable & {
 
 export type Box = Describable & {
   contents: Item[];
+  size: SIZE,
 }

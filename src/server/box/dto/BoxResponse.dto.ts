@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { SIZE } from '../box.entity';
 import { Item } from '../item.entity';
 
 export abstract class BoxResponseDto {
@@ -12,10 +13,7 @@ export abstract class BoxResponseDto {
   public description?: string;
 
   @ApiProperty()
-  public createdAt: Date;
-
-  @ApiProperty()
-  public updatedAt?: Date;
+  public size?: SIZE;
 
   @ApiProperty()
   public contents: Item[]

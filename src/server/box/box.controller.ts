@@ -38,7 +38,9 @@ export class BoxController {
 
   @Get(':id')
   public async findOne(@Param('id') id: string): Promise<BoxResponseDto> {
-    const [box] = await this.boxService.findById([id]);
+    const [box] = await this.boxService.findById([id], undefined, {
+      relations: ['contents'],
+    });
     if (!box) {
       throw new NotFoundException(`Unable to locate box ${id}`);
     }
