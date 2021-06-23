@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { Mutation } from 'vuex';
 import { BoxStateShape } from './state';
 import { Box } from './types';
@@ -22,6 +23,6 @@ export const mutations: Record<string, Mutation<BoxStateShape>> = {
   [MUTATIONS.UPDATE_BOX](state, { id, ...box }: Box) {
     const boxToUpdate = state.boxes.find(({ id: boxId }) => boxId === id);
     const boxIndex = state.boxes.indexOf(boxToUpdate);
-    state.boxes[boxIndex] = { id, ...box };
+    Vue.set(state.boxes, boxIndex, { id, ...box });
   },
 };
