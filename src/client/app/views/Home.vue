@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <box-modal
-      :visible.sync="showAddModal"
+      :visible.sync="showModal"
       :submit-handler="submitForm"
       :print-handler="printLabel"
       v-bind="currentBox"
@@ -78,9 +78,7 @@ import { Box } from '../store/box/types';
   },
 })
 export default class Home extends Vue {
-  private showOptionsModal = false;
-
-  private showAddModal = false;
+  private showModal = false;
 
   private printLabel(e: Event, id: string): void {
     store.dispatch(LABEL.PRINT_LABEL, id);
@@ -92,6 +90,7 @@ export default class Home extends Vue {
     } else {
       store.dispatch(BOX.UPDATE_BOX, box);
     }
+    this.showModal = false;
   }
 
   public async mounted(): Promise<void> {
@@ -100,7 +99,7 @@ export default class Home extends Vue {
 
   private viewBox(id?: string) {
     store.dispatch(BOX.SET_CURRENT_BOX, id);
-    this.showAddModal = true;
+    this.showModal = true;
   }
 }
 </script>
