@@ -7,14 +7,16 @@
       v-bind="currentBox"
     />
     <page-section
-      background-color="white"
-      id="header"
+      background-color="#eee"
+      id="add-button-row"
     >
-      <h2>Boxes</h2>
       <el-button
+        type="success"
         icon="el-icon-plus"
         @click="() => viewBox(null)"
-      />
+      >
+        Add Box
+      </el-button>
     </page-section>
     <page-section
       background-color="#eee"
@@ -106,24 +108,6 @@ export default class Home extends Vue {
 
 <style lang="scss">
   @import '@/assets/scss/breakpoints.scss';
-  #header {
-    display: grid;
-    grid-template-columns: auto 0.25fr;
-    grid-template-rows: auto;
-    align-items: center;
-    h2{
-      line-height: 1;
-      margin-bottom: 0px;
-    };
-    button i{
-      font-weight: bold;
-      font-size: 20px;
-    }
-  }
-  .home{
-    h2{ color: var(--text-dark)!important }
-  }
-
   #card-list{
     display: grid;
     grid-gap: var(--spacing-xs);
@@ -138,11 +122,18 @@ export default class Home extends Vue {
     }
   }
 
+  #add-button-row{
+    padding-bottom: 0px;
+    display: grid;
+    grid-template-columns: auto;
+    justify-items: right;
+  }
+
   .card{
     margin-bottom: var(--spacing-md);
     .el-card__header {
       display: grid;
-      grid-template-columns: auto 70px;
+      grid-template-columns: auto max-content;
       align-items: center;
     }
     &:last-of-type{

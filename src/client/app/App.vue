@@ -1,6 +1,11 @@
 <template>
   <div>
-    <router-view />
+    <header>
+      <h2>{{ APP_NAME }}</h2>
+    </header>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
@@ -13,6 +18,10 @@ import { store } from './store';
   },
 })
 export default class App extends Vue {
+  private get APP_NAME(): string {
+    return store.getters.appName;
+  }
+
   public mounted(): void {
     document.title = store.getters.appName;
   }
@@ -26,6 +35,21 @@ export default class App extends Vue {
 
 body {
   background-color: var(--white);
+  header{
+    padding: var(--spacing-md);
+    display: grid;
+    grid-template-columns: auto 0.25fr;
+    grid-template-rows: auto;
+    align-items: center;
+    h2{
+      line-height: 1;
+      margin-bottom: 0px;
+    };
+    button i{
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
   p, li, h1, h2, h3, h4, h5, h6{
     color: var(--text-dark);
   }
