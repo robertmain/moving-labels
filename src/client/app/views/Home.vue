@@ -26,18 +26,25 @@
         v-for="box in boxes"
         :key="box.id"
         class="card"
+        :body-style="{ padding: '0px' }"
+        shadow="hover"
       >
         <template slot="header">
-          <h5>{{ box.name }}</h5>
+          <h4>{{ box.name }}</h4>
           <el-button
             type="default"
             icon="el-icon-setting"
             @click="viewBox(box.id)"
           />
         </template>
-        <p>
-          {{ box.description }}
-        </p>
+        <h6 class="size">
+          Size: {{ box.size }}
+        </h6>
+        <div class="body">
+          <p>
+            {{ box.description }}
+          </p>
+        </div>
       </el-card>
     </page-section>
   </div>
@@ -138,6 +145,14 @@ export default class Home extends Vue {
     }
     &:last-of-type{
       margin-bottom: 0px;
+    }
+    .body{
+      padding: var(--spacing-md);
+    }
+    .size {
+      padding: var(--spacing-xs) var(--spacing-md);
+      background-color: var(--app-primary);
+      color: white;
     }
   }
 </style>
