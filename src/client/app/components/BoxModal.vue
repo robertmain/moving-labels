@@ -53,12 +53,19 @@
             :key="item.id"
             :title="item.name"
           >
-            <el-input v-model="item.name" />
+            <el-input
+              v-model="item.name"
+              placeholder="Name"
+            />
             <el-input
               type="textarea"
               :rows="6"
               placeholder="Description"
               v-model="item.description"
+            />
+            <el-input
+              placeholder="Value"
+              v-model="item.value"
             />
           </el-collapse-item>
         </el-collapse>
@@ -207,7 +214,7 @@ export default class BoxModal extends Vue {
     return Object.values(SIZE);
   }
 
-  private newItem () {
+  private newItem() {
     this.formData.contents.push({
       name: '',
       description: '',
