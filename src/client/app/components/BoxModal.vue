@@ -47,26 +47,54 @@
         </el-select>
       </el-form-item>
       <el-form-item>
+        <el-collapse>
+          <el-collapse-item
+            v-for="item in formData.contents"
+            :key="item.id"
+            :title="item.name"
+          >
+            <el-input v-model="item.name" />
+            <el-input
+              type="textarea"
+              :rows="6"
+              placeholder="Description"
+              v-model="item.description"
+            />
+          </el-collapse-item>
+        </el-collapse>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="default"
+          size="medium"
+          native-type="button"
+          :style="{width: '100%'}"
+          @click="newItem"
+        >
+          <i class="el-icon-plus" />
+          Add Box Item
+        </el-button>
+      </el-form-item>
+      <el-form-item class="controls">
         <el-button
           type="success"
-          size="medium"
-          icon="el-icon-finished"
           native-type="submit"
         >
+          <i class="el-icon-finished" /><br>
           Save
+        </el-button>
+        <el-button
+          type="default"
+          native-type="button"
+          v-if="id"
+          @click="(e) => printHandler(e, id)"
+        >
+          <i class="el-icon-printer" /><br>
+          <br>
+          Print Label
         </el-button>
       </el-form-item>
     </el-form>
-    <div
-      slot="footer"
-      v-if="id"
-    >
-      <el-button @click="(e) => printHandler(e, id)">
-        <i class="el-icon-printer" /><br>
-        <br>
-        Print Label
-      </el-button>
-    </div>
   </el-dialog>
 </template>
 <script lang="ts">
@@ -84,8 +112,10 @@ import {
   Input,
   Select,
   Option,
+  Collapse,
+  CollapseItem,
 } from 'element-ui';
-import { SIZE } from '../store/box/types';
+import { Item, SIZE } from '../store/box/types';
 
 @Component({
   components: {
@@ -96,6 +126,8 @@ import { SIZE } from '../store/box/types';
     ElButton: Button,
     ElSelect: Select,
     ElOption: Option,
+    ElCollapse: Collapse,
+    ElCollapseItem: CollapseItem,
   },
   filters: {
     titleCase: (value: string) => value[0].toUpperCase()
@@ -136,6 +168,12 @@ export default class BoxModal extends Vue {
   public size: SIZE;
 
   @Prop({
+    type: Array,
+    default: () => ([]),
+  })
+  public contents: Item[];
+
+  @Prop({
     type: Function,
     required: true,
   })
@@ -154,6 +192,7 @@ export default class BoxModal extends Vue {
     name: '',
     description: '',
     size: '',
+    contents: [],
   };
 
   private populate() {
@@ -161,10 +200,35 @@ export default class BoxModal extends Vue {
     this.formData.name = this.name;
     this.formData.description = this.description;
     this.formData.size = this.size;
+    this.formData.contents = this.contents;
   }
 
   private get sizes(): string[] {
     return Object.values(SIZE);
   }
+
+  private newItem () {
+    this.formData.contents.push({
+      name: '',
+      description: '',
+      value: null,
+    });
+  }
 }
 </script>
+
+<style lang="scss">
+.controls .el-form-item__content {
+  display: grid;
+  grid-template-columns: [save-button] 1fr [print-button] 1fr;
+  grid-gap: var(--spacing-sm);
+  button {
+    &:nth-last-of-type(1) {
+      grid-area: print-button;
+    }
+    &:nth-last-of-type(2) {
+      grid-area: save-button;
+    }
+  }
+}
+</style>
