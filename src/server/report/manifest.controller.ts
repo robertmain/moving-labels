@@ -100,6 +100,7 @@ export class ManifestController {
                   {
                     font: 'Courier',
                     fontSize: 12,
+                    alignment: 'right',
                     text: (value) ? value.toLocaleString('en-US', {
                       currency: 'USD',
                       style: 'currency',
