@@ -3,5 +3,5 @@ export type LabelStateShape = {
 }
 
 export const state : LabelStateShape = {
-  printing: true,
+  printing: false,
 };
