@@ -49,7 +49,7 @@
       <el-form-item>
         <el-collapse>
           <el-collapse-item
-            v-for="item in formData.contents"
+            v-for="(item, index) in formData.contents"
             :key="item.id"
             :title="item.name"
           >
@@ -66,7 +66,21 @@
             <el-input
               placeholder="Value"
               v-model="item.value"
-            />
+            >
+              <template slot="prepend">
+                $
+              </template>
+            </el-input>
+            <el-button
+              type="danger"
+              size="medium"
+              native-type="button"
+              :style="{width: '100%'}"
+              @click="removeItem(index)"
+            >
+              <i class="el-icon-plus" />
+              Remove {{ item.name }}
+            </el-button>
           </el-collapse-item>
         </el-collapse>
       </el-form-item>
@@ -220,6 +234,10 @@ export default class BoxModal extends Vue {
       description: '',
       value: null,
     });
+  }
+
+  private removeItem(index: number) {
+    this.formData.contents.splice(index, 1);
   }
 }
 </script>
