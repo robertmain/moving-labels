@@ -109,11 +109,14 @@ export class ManifestController {
                 ])),
                 [
                   { text: 'Total Box Value', bold: true, alignment: 'right' },
-                  contents.reduce((acc, { value: val }) => acc + val, 0)
-                    .toLocaleString('en-US', {
-                      currency: 'USD',
-                      style: 'currency',
-                    }),
+                  {
+                    font: 'Courier',
+                    text: contents.reduce((acc, { value: val }) => acc + val, 0)
+                      .toLocaleString('en-US', {
+                        currency: 'USD',
+                        style: 'currency',
+                      }),
+                  },
                 ],
               ],
             },
