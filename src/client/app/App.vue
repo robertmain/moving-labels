@@ -31,7 +31,7 @@ export default class App extends Vue {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@500;900&display=swap');
 @import '@/assets/scss/breakpoints.scss';
-*{ box-sizing: border-box; }
+*{ box-sizing: border-box; font-family: var(--body-font-family);}
 
 body {
   background-color: var(--white);
