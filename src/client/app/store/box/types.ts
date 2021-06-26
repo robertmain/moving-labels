@@ -3,6 +3,7 @@ export enum SIZE {
   LARGE = 'LARGE',
   MEDIUM = 'MEDIUM',
   SMALL = 'SMALL',
+  XSMALL = 'XSMALL',
 }
 
 type Describable = {
