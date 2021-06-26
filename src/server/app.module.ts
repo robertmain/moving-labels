@@ -5,6 +5,7 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { BoxModule } from './box/box.module';
 import { LabelModule } from './label/label.module';
+import { ReportModule } from './report/report.module';
 
 const {
   DATABASE_URL,
@@ -30,6 +31,7 @@ const {
     }),
     BoxModule,
     LabelModule,
+    ReportModule,
   ],
   controllers: [],
   providers: [],
