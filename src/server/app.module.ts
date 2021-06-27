@@ -6,6 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { BoxModule } from './box/box.module';
 import { LabelModule } from './label/label.module';
 import { ReportModule } from './report/report.module';
+import { ConfigController } from './config.controller';
 
 const {
   DATABASE_URL,
@@ -33,7 +34,9 @@ const {
     LabelModule,
     ReportModule,
   ],
-  controllers: [],
+  controllers: [
+    ConfigController,
+  ],
   providers: [],
 })
 export class AppModule {
