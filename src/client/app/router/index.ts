@@ -13,6 +13,14 @@ export const routes: RouteConfig[] = [
       icon: 'el-icon-house',
     },
   },
+  {
+    path: '/scan',
+    name: 'Scan',
+    component: () => import('@/views/Scan.vue'),
+    meta: {
+      title: 'Scan Barcode',
+    },
+  },
 ];
 
 const router = new VueRouter({

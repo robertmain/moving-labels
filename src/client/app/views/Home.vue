@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <box-modal
       :visible.sync="showModal"
       :submit-handler="submitForm"
