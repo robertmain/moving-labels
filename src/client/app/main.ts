@@ -6,11 +6,11 @@ import { store } from './store';
 import 'reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/scss/vars.scss';
-import { MUTATIONS } from './store/mutations';
+import { ACTIONS } from './store/actions';
 
 Vue.config.productionTip = false;
 
-store.commit(MUTATIONS.SET_APP_NAME, process.env.APP_NAME);
+store.dispatch(ACTIONS.GET_APP_NAME, 'APP_NAME');
 
 new Vue({
   router,
