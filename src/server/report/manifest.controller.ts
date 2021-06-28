@@ -84,13 +84,21 @@ export class ManifestController {
       },
       content: [
         ...boxes.map(({ name: boxName, contents }) => ([
-          !title ? { text: boxName, bold: true } : null,
           {
             layout: 'lightHorizontalLines',
             table: {
-              headerRows: 1,
+              headerRows: 2,
               widths: ['*', 'auto'],
               body: [
+                [
+                  {
+                    text: (!title) ? boxName : title,
+                    bold: true,
+                  },
+                  {
+                    text: '',
+                  },
+                ],
                 [
                   { bold: true, text: 'Item' },
                   { bold: true, text: 'Value' },
