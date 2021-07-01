@@ -4,6 +4,9 @@ const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { DefinePlugin } = require('webpack');
+const commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString();
 
 const paths = {
   src: {
@@ -106,7 +109,7 @@ const config = ({ mode = 'none' }, { APP_NAME = '', BASE_URL = '/' } = {}) => ({
     new VueLoaderPlugin(),
     new DefinePlugin({
       'process.env.BASE_URL': JSON.stringify(BASE_URL),
-      'process.env.APP_NAME': JSON.stringify(APP_NAME),
+      'process.env.COMMIT_HASH': JSON.stringify(commitHash),
     }),
   ],
 });

@@ -11,6 +11,7 @@ import { ACTIONS } from './store/actions';
 Vue.config.productionTip = false;
 
 store.dispatch(ACTIONS.GET_APP_NAME, 'APP_NAME');
+console.info(`Version ${process.env.COMMIT_HASH}`);
 
 new Vue({
   router,
