@@ -23,7 +23,9 @@ export default class App extends Vue {
   }
 
   public mounted(): void {
-    document.title = store.getters.appName;
+    store.watch(() => store.getters.appName, (value) => {
+      document.title = value;
+    });
   }
 }
 </script>
