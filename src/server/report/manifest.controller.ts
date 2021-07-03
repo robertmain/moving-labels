@@ -6,9 +6,11 @@ import {
   Param,
   Res,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Response } from 'express';
 import PDF from 'pdfmake';
 import { Writable } from 'stream';
+import { Repository } from 'typeorm';
 import { Box } from '../box/box.entity';
 import { BoxService } from '../box/box.service';
 
@@ -16,6 +18,9 @@ import { BoxService } from '../box/box.service';
 export class ManifestController {
   @Inject(BoxService)
   private boxService: BoxService;
+
+  @InjectRepository(Box)
+  private boxRepository: Repository<Box>;
 
   private pdf: PDF;
 
@@ -39,10 +44,12 @@ export class ManifestController {
   @Get()
   @Header('Content-Type', 'application/pdf')
   public async fullManifest(@Res() res: Response): Promise<void> {
-    const boxes = await this.boxService.findAll(false, {
-      relations: ['contents'],
-    });
-    this.generateManifest(res, boxes);
+    const moreBoxes = await this.boxRepository.createQueryBuilder('b')
+      .leftJoinAndMapMany('b.contents', 'b.contents', 'i', 'i.boxId = b.id')
+      .orderBy('b.name')
+      .addOrderBy('i.name')
+      .getMany();
+    this.generateManifest(res, moreBoxes);
   }
 
   @Get(':id')
