@@ -1,12 +1,12 @@
 import { Module } from 'vuex';
 import { mutations } from './mutations';
-import { BoxStateShape, state } from './state';
-import { State } from '../state';
+import { State } from './state';
+import { RootState } from '../state';
 import { actions } from './actions';
 import { getters } from './getters';
 
-export const BoxModule: Module<BoxStateShape, State> = {
-  state,
+export const BoxModule: Module<State, RootState> = {
+  state: new State(),
   mutations,
   actions,
   getters,

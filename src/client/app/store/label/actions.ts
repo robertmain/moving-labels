@@ -1,14 +1,14 @@
-import { Action } from 'vuex';
+import { ActionTree } from 'vuex';
 import { printLabel } from '@/api/Label';
-import { LabelStateShape } from './state';
+import { State } from './state';
 import { MUTATIONS } from './mutations';
-import { State } from '../state';
+import { RootState } from '../state';
 
 export enum ACTIONS {
   PRINT_LABEL = 'PRINT_LABEL',
 }
 
-export const actions: Record<string, Action<LabelStateShape, State>> = {
+export const actions: ActionTree<State, RootState> = {
   async [ACTIONS.PRINT_LABEL]({ commit }, id: string): Promise <void> {
     commit(MUTATIONS.PRINTING_STARTED);
     try {

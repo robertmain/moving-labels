@@ -1,5 +1,5 @@
-import { Mutation } from 'vuex';
-import { LabelStateShape } from './state';
+import { MutationTree } from 'vuex';
+import { State } from './state';
 
 export enum MUTATIONS {
   PRINTING_STARTED = 'PRINTING_STARTED',
@@ -7,7 +7,7 @@ export enum MUTATIONS {
   PRINTER_ERROR = 'PRINTER_ERROR',
 }
 
-export const mutations: Record<string, Mutation<LabelStateShape>> = {
+export const mutations: MutationTree<State> = {
   [MUTATIONS.PRINTING_STARTED](state): void {
     state.printing = true;
   },

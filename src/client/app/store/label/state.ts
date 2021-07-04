@@ -1,7 +1,3 @@
-export type LabelStateShape = {
-  printing: boolean;
+export class State {
+  printing = false;
 }
-
-export const state : LabelStateShape = {
-  printing: false,
-};

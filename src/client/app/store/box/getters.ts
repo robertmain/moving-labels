@@ -1,10 +1,10 @@
-import { Getter } from 'vuex';
-import { State } from '../state';
-import { BoxStateShape } from './state';
+import { GetterTree } from 'vuex';
+import { RootState } from '../state';
+import { State } from './state';
 
-export const getters: Record<string, Getter<State, BoxStateShape>> = {
-  boxes: ({ boxes }: BoxStateShape) => boxes,
-  currentBox: ({ boxes, currentBoxId }: BoxStateShape) => boxes
+export const getters: GetterTree<State, RootState> = {
+  boxes: ({ boxes }: State) => boxes,
+  currentBox: ({ boxes, currentBoxId }: State) => boxes
     .find(({ id }) => id === currentBoxId) ?? ({
     id: null,
     name: '',

@@ -1,7 +1,3 @@
-export type State = {
-  APP_NAME: string,
+export class RootState {
+  APP_NAME = '';
 }
-
-export const state = {
-  APP_NAME: '',
-};

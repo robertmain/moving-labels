@@ -1,11 +1,7 @@
 import { Box } from './types';
 
-export type BoxStateShape = {
-  currentBoxId: string | null;
-  boxes: Box[];
-}
+export class State {
+  currentBoxId: string | null = null;
 
-export const state : BoxStateShape = {
-  currentBoxId: null,
-  boxes: [],
-};
+  boxes: Box[] = [];
+}

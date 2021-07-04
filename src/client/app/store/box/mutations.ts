@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { Mutation } from 'vuex';
-import { BoxStateShape } from './state';
+import { Mutation, MutationTree } from 'vuex';
+import { State } from './state';
 import { Box } from './types';
 
 export enum MUTATIONS {
@@ -10,7 +10,7 @@ export enum MUTATIONS {
   AJAX_FAILIURE = 'AJAX_FAILIURE',
 }
 
-export const mutations: Record<string, Mutation<BoxStateShape>> = {
+export const mutations: MutationTree<State> = {
   [MUTATIONS.ADD_BOXES](state, boxes: Box[]): void {
     state.boxes.push(...boxes);
   },

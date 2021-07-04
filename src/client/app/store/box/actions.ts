@@ -1,8 +1,8 @@
-import { Action } from 'vuex';
+import { ActionTree } from 'vuex';
 import { addBox, getBoxes, updateBox } from '@/api/Box';
-import { BoxStateShape } from './state';
+import { State } from './state';
 import { MUTATIONS } from './mutations';
-import { State } from '../state';
+import { RootState } from '../state';
 import { Box } from './types';
 
 export enum ACTIONS {
@@ -12,7 +12,7 @@ export enum ACTIONS {
   SET_CURRENT_BOX = 'SET_CURRENT_BOX',
 }
 
-export const actions: Record<string, Action<BoxStateShape, State>> = {
+export const actions: ActionTree<State, RootState> = {
   async [ACTIONS.GET_BOXES]({ commit }): Promise <void> {
     try {
       const { data } = await getBoxes();

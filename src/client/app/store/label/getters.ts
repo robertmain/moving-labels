@@ -1,6 +1,6 @@
-import { Getter } from 'vuex';
-import { State } from '../state';
-import { LabelStateShape } from './state';
+import { GetterTree } from 'vuex';
+import { RootState } from '../state';
+import { State } from './state';
 
-export const getters: Record<string, Getter<State, LabelStateShape>> = {
+export const getters: GetterTree<State, RootState> = {
 };
