@@ -64,6 +64,8 @@
               v-model="item.description"
             />
             <el-input
+              type="number"
+              step=".01"
               placeholder="Value"
               v-model="item.value"
             >
