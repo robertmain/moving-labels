@@ -17,6 +17,7 @@ export class Item extends BaseEntity {
   public description?: string;
 
   @Column({
+    type: 'real',
     comment: 'The value of a given item in cents(to make currency calculations easier)',
     nullable: true,
   })
